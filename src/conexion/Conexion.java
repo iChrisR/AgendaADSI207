@@ -60,7 +60,7 @@ private static String mensaje;
             System.out.println("Error en ejecución : "+e);
             var = false;
         }
-        return var;        
+        return var;
     }
 
     public ResultSet consultar(String sql) {
