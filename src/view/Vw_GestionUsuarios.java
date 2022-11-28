@@ -68,7 +68,10 @@ public class Vw_GestionUsuarios extends javax.swing.JDialog {
     }
 
     void llenarUsuario() {
-        rb_publico.setSelected(true);
+        if (listauser.size()==1)
+        {
+            rb_publico.setSelected(true);
+        }
         Mdl_User user = new Mdl_User();
         String clave;
         if (pxt_clave.getText().equals(pxt_confirmacion.getText()))
