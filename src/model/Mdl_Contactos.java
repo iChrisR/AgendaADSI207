@@ -1,11 +1,11 @@
 package model;
 public class Mdl_Contactos {
     private int idcontacto;
-    private int tipo_contacto;
+    private String tipo_contacto;
     private int persona;
     private String email;
     private String alias;
-    private char estado;
+    private String estado;
     private String fecha_registro;
     private String fecha_modificacion;
     private String fecha_importante;
@@ -15,7 +15,7 @@ public class Mdl_Contactos {
     private String sitio_web;
     private String visibilidad;
 
-    public Mdl_Contactos(int idcontacto, int tipo_contacto, int persona, String email, String alias, char estado, String fecha_registro, String fecha_modificacion, String fecha_importante, String tipo_fecha, String grupo, String relacion, String sitio_web, String visibilidad) {
+    public Mdl_Contactos(int idcontacto, String tipo_contacto, int persona, String email, String alias, String estado, String fecha_registro, String fecha_modificacion, String fecha_importante, String tipo_fecha, String grupo, String relacion, String sitio_web, String visibilidad) {
         this.idcontacto = idcontacto;
         this.tipo_contacto = tipo_contacto;
         this.persona = persona;
@@ -42,10 +42,10 @@ public class Mdl_Contactos {
         this.idcontacto = idcontacto;
     }
 
-    public int getTipo_Contacto() {
+    public String getTipo_Contacto() {
         return tipo_contacto;
     }
-    public void setTipo_Contacto(int tipo_contacto) {
+    public void setTipo_Contacto(String tipo_contacto) {
         this.tipo_contacto = tipo_contacto;
     }
 
@@ -70,10 +70,10 @@ public class Mdl_Contactos {
         this.alias = alias;
     }
 
-    public char getEstado() {
+    public String getEstado() {
         return estado;
     }
-    public void setEstado(char estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
