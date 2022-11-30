@@ -27,16 +27,20 @@ import javax.swing.JOptionPane;
  * @author Joan Hurtado
  */
 public class Vst_Notas extends javax.swing.JFrame {
-
-  Ctr_Notas control = new Ctr_Notas();
-Mdl_Notas notas = new Mdl_Notas();
+    //Asignacion de  objetos de controlador y modelo
+    Ctr_Notas control = new Ctr_Notas();
+    Mdl_Notas notas = new Mdl_Notas();
     
     public Vst_Notas() {
         initComponents();
+           this.setLocationRelativeTo(null);
            mProperties = new Properties();
     }
+    // variables que se van a usar para crear el correo
     private String EmailDesde = control.SacarCorreo();
-    private static String Contrasena="jpmlrdetyxuabbxi";
+    private static String Contrasena="jpmlrdetyxuabbxi"; 
+    // Esta contraseña necesita un metodo 
+    //para traerla desde la base de datos
     private String emailPara;
     private String titulo ;
     private String Contenido;
@@ -52,7 +56,7 @@ Mdl_Notas notas = new Mdl_Notas();
        notas.setId_nota(control.Auto_increment());
        notas.setHora(control.hora());
        notas.setFecha_registro(control.fechaHoy());
-       notas.setFecha(txtFechaEvento.getText());
+//  [No se usa]     notas.setFecha(txtFechaEvento.getText());
        notas.setEstado("1");
        notas.setTitulo(txttitulo1.getText());
        
@@ -66,16 +70,14 @@ Mdl_Notas notas = new Mdl_Notas();
            crearEmail();
            EnviarEmail();
        }
-       //control.Guardar(notas);
+       control.Guardar(notas);
        Limpiar();
    }
 //Metodo para limipiar los txt
     public void Limpiar() {
         txttitulo1.setText(" ");
-       
-       
         txtNota.setText("");
-        txtFechaEvento.setText("");
+//        txtFechaEvento.setText("");
         cbbtipodenota1.setSelectedIndex(0);
         
     }
@@ -128,6 +130,10 @@ Mdl_Notas notas = new Mdl_Notas();
             Logger.getLogger(Vst_Notas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /*
+    Se necesita enlazar el boton ver notas con el diseño 
+    */
 
 
     /**
@@ -161,7 +167,6 @@ Mdl_Notas notas = new Mdl_Notas();
         jRadioButton2 = new javax.swing.JRadioButton();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        btnlimpiar1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtNota = new javax.swing.JTextArea();
         lblescribirmensaje1 = new javax.swing.JLabel();
@@ -169,14 +174,15 @@ Mdl_Notas notas = new Mdl_Notas();
         jPanel4 = new javax.swing.JPanel();
         lblTIPODENOTA1 = new javax.swing.JLabel();
         lblTITULO1 = new javax.swing.JLabel();
-        lblFechaEvento = new javax.swing.JLabel();
+        lblTIPODENOTA2 = new javax.swing.JLabel();
         btnenviar1 = new javax.swing.JButton();
-        txtFechaEvento = new javax.swing.JTextField();
         txttitulo1 = new javax.swing.JTextField();
         chkNotificar = new javax.swing.JCheckBox();
         RbtPrivado = new javax.swing.JRadioButton();
         RbtPublico = new javax.swing.JRadioButton();
+        btnlimpiar1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        btnVerNotas = new javax.swing.JButton();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jFrame1.setAutoRequestFocus(false);
@@ -377,14 +383,6 @@ Mdl_Notas notas = new Mdl_Notas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnlimpiar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnlimpiar1.setText("Limpiar ");
-        btnlimpiar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnlimpiar1ActionPerformed(evt);
-            }
-        });
-
         txtNota.setColumns(20);
         txtNota.setRows(5);
         jScrollPane2.setViewportView(txtNota);
@@ -402,17 +400,18 @@ Mdl_Notas notas = new Mdl_Notas();
             }
         });
 
-        lblTIPODENOTA1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTIPODENOTA1.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         lblTIPODENOTA1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTIPODENOTA1.setText("TIPO DE NOTA");
 
         lblTITULO1.setBackground(new java.awt.Color(0, 0, 0));
-        lblTITULO1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTITULO1.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         lblTITULO1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTITULO1.setText("TITULO");
 
-        lblFechaEvento.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        lblFechaEvento.setText("Fecha de Evento");
+        lblTIPODENOTA2.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
+        lblTIPODENOTA2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTIPODENOTA2.setText("Tipo de privacidad");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -422,21 +421,18 @@ Mdl_Notas notas = new Mdl_Notas();
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTITULO1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblTIPODENOTA1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblFechaEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 144, Short.MAX_VALUE)))
+                    .addComponent(lblTIPODENOTA2, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addComponent(lblTITULO1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(lblTIPODENOTA1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(lblFechaEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addGap(93, 93, 93))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(lblTIPODENOTA2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         btnenviar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -444,12 +440,6 @@ Mdl_Notas notas = new Mdl_Notas();
         btnenviar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnenviar1ActionPerformed(evt);
-            }
-        });
-
-        txtFechaEvento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaEventoActionPerformed(evt);
             }
         });
 
@@ -479,38 +469,46 @@ Mdl_Notas notas = new Mdl_Notas();
         buttonGroup1.add(RbtPublico);
         RbtPublico.setText("PUBLICO");
 
+        btnlimpiar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnlimpiar1.setText("Limpiar ");
+        btnlimpiar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlimpiar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnlimpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnenviar1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(txtFechaEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addContainerGap()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txttitulo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbbtipodenota1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RbtPrivado, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(RbtPublico))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txttitulo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cbbtipodenota1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnlimpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(RbtPublico)
-                                .addGap(18, 18, 18)
-                                .addComponent(RbtPrivado, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chkNotificar)
-                            .addComponent(btnenviar1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                                .addGap(134, 134, 134)
+                                .addComponent(chkNotificar)))
+                        .addGap(38, 38, 38)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblescribirmensaje1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -519,44 +517,50 @@ Mdl_Notas notas = new Mdl_Notas();
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblescribirmensaje1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txttitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
+                                .addGap(54, 54, 54)
                                 .addComponent(cbbtipodenota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
-                                .addComponent(txtFechaEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(RbtPrivado)
+                                    .addComponent(RbtPublico)))
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnenviar1)
+                            .addComponent(btnlimpiar1))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnlimpiar1)
-                            .addComponent(btnenviar1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(chkNotificar)
-                            .addComponent(RbtPrivado)
-                            .addComponent(RbtPublico))
-                        .addGap(0, 54, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(chkNotificar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnVerNotas.setText("Ver Notas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(btnVerNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(btnVerNotas)
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -569,10 +573,10 @@ Mdl_Notas notas = new Mdl_Notas();
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -624,10 +628,6 @@ Mdl_Notas notas = new Mdl_Notas();
         Enviar();
     }//GEN-LAST:event_btnenviar1ActionPerformed
 
-    private void txtFechaEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaEventoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaEventoActionPerformed
-
     private void RbtPrivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RbtPrivadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RbtPrivadoActionPerformed
@@ -659,6 +659,20 @@ Mdl_Notas notas = new Mdl_Notas();
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -672,6 +686,7 @@ Mdl_Notas notas = new Mdl_Notas();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RbtPrivado;
     private javax.swing.JRadioButton RbtPublico;
+    private javax.swing.JButton btnVerNotas;
     private javax.swing.JButton btnenviar;
     private javax.swing.JButton btnenviar1;
     private javax.swing.JButton btnlimpiar;
@@ -693,14 +708,13 @@ Mdl_Notas notas = new Mdl_Notas();
     private javax.swing.JLabel lblESTADO;
     private javax.swing.JLabel lblEVENTO;
     private javax.swing.JLabel lblFECHAREGISTRO;
-    private javax.swing.JLabel lblFechaEvento;
     private javax.swing.JLabel lblTIPODENOTA;
     private javax.swing.JLabel lblTIPODENOTA1;
+    private javax.swing.JLabel lblTIPODENOTA2;
     private javax.swing.JLabel lblTITULO;
     private javax.swing.JLabel lblTITULO1;
     private javax.swing.JLabel lblescribirmensaje;
     private javax.swing.JLabel lblescribirmensaje1;
-    private javax.swing.JTextField txtFechaEvento;
     private javax.swing.JTextArea txtNota;
     private javax.swing.JTextArea txtarea;
     private javax.swing.JTextField txtestado;

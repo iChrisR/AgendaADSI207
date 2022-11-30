@@ -54,12 +54,13 @@ public class Ctr_Notas {
                 while (rs.next()) {
                     id2 = rs.getInt("IDNOTA");
                 }
+                  id2++;
             }
         } catch (Exception e) {
             System.out.println("error al buscar el int");
         }
 
-        id2++;
+      
         return id2;
     }
 
@@ -74,7 +75,7 @@ public class Ctr_Notas {
     public String SacarCorreo() {
 
         Conexion conectar = new Conexion();
-        String sql = "SELECT EMAIL FROM CONTACTOS";
+        String sql = "SELECT EMAIL FROM contactos WHERE  IDCONTACTO = 1";
         ResultSet rs = conectar.consultar(sql);
         String Correo = "";
 
