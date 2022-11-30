@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Conexion implements Configuracion {
-private static String mensaje;
-    private static Connection con = null;
+  private static String mensaje;
+  private static Connection con = null;
 
     public String getMensaje() {
         return mensaje;
