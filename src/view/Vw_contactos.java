@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.Ctr_Contactos;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import model.Mdl_Contactos;
 
 /**
@@ -50,6 +46,7 @@ public class Vw_contactos extends javax.swing.JDialog {
         ctc.ingresarContacto(contac);
         limpiarTabla();
         cargarTabla();
+        limpiar();
     }
 
     void limpiarTabla() {
@@ -60,6 +57,7 @@ public class Vw_contactos extends javax.swing.JDialog {
             tbl_contactos.setValueAt("", p, 2);
             tbl_contactos.setValueAt("", p, 3);
             tbl_contactos.setValueAt("", p, 4);
+            tbl_contactos.setValueAt("", p, 5);
         }
     }
 
@@ -68,7 +66,7 @@ public class Vw_contactos extends javax.swing.JDialog {
         listacont = ctc.consultarContactos();
         for (int i = 0; i < listacont.size(); i++)
         {
-            
+
             tbl_contactos.setValueAt(listacont.get(i).getIdcontacto(), i, 0);
             tbl_contactos.setValueAt(listacont.get(i).getNombres(), i, 1);
             tbl_contactos.setValueAt(listacont.get(i).getApellidos(), i, 2);
@@ -141,13 +139,27 @@ public class Vw_contactos extends javax.swing.JDialog {
         if (rb_privado.isSelected())
         {
             contac.setVisibilidad("1");
-        }else{
+        } else
+        {
             contac.setVisibilidad("2");
         }
         ctc.actualizarContacto(contac, tbl_contactos.getSelectedRow()+1);
         limpiarTabla();
         cargarTabla();
         limpiar();
+    }
+
+    void eliminarContacto() {
+        if (tbl_contactos.getSelectedRow()==0)
+        {
+            JOptionPane.showMessageDialog(null, "Este contacto no puede eliminarce");
+        }else{
+        Ctr_Contactos ctc = new Ctr_Contactos();
+        ctc.eliminar(tbl_contactos.getSelectedRow());
+        limpiarTabla();
+        cargarTabla();
+        limpiar();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -335,8 +347,18 @@ public class Vw_contactos extends javax.swing.JDialog {
         );
 
         rb_publico.setText("publico");
+        rb_publico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_publicoActionPerformed(evt);
+            }
+        });
 
         rb_privado.setText("Privado");
+        rb_privado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_privadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_textFiels2Layout = new javax.swing.GroupLayout(pnl_textFiels2);
         pnl_textFiels2.setLayout(pnl_textFiels2Layout);
@@ -622,12 +644,25 @@ public class Vw_contactos extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_limpiarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        
+        eliminarContacto();
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void tbl_contactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_contactosMouseClicked
         mostrarContactos();
     }//GEN-LAST:event_tbl_contactosMouseClicked
+
+    private void rb_publicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_publicoActionPerformed
+        if (rb_publico.isSelected())
+        {
+            rb_privado.setSelected(false);
+        }
+    }//GEN-LAST:event_rb_publicoActionPerformed
+
+    private void rb_privadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_privadoActionPerformed
+        if (rb_privado.isSelected())
+        {
+            rb_publico.setSelected(false);
+        }    }//GEN-LAST:event_rb_privadoActionPerformed
 
     /**
      * @param args the command line arguments

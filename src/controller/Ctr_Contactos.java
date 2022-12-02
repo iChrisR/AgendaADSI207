@@ -4,7 +4,6 @@ import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import model.Mdl_Contactos;
 import model.Mdl_Persona;
 
@@ -21,12 +20,12 @@ public class Ctr_Contactos {
         if (lis.isEmpty())
         {
             sql = "INSERT INTO contactos(IDCONTACTO, TIPO_CONTACTO, PERSONA, EMAIL, ALIAS, ESTADO, FECHA_REGISTRO, FECHA_MODIFICACION, FECHA_IMPORTANTE, TIPO_FECHA, GRUPO, RELACION, SITIO_WEB, VISIBILIDAD) "
-                    + "VALUES (" + 1 + ", '" + contacto.getTipo_contacto() + "', " + 1 + ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "',"+null+",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
+                    + "VALUES (" + 1 + ", '" + contacto.getTipo_contacto() + "', " + 1 + ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "'," + null + ",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
         } else
         {
-            per.llenarPersona(contacto,autoImcremento());
-             sql = "INSERT INTO contactos(IDCONTACTO, TIPO_CONTACTO, PERSONA, EMAIL, ALIAS, ESTADO, FECHA_REGISTRO, FECHA_MODIFICACION, FECHA_IMPORTANTE, TIPO_FECHA, GRUPO, RELACION, SITIO_WEB, VISIBILIDAD) "
-                    + "VALUES (" + autoImcremento() + ", '" + contacto.getTipo_contacto() + "', " + autoImcremento()+ ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "',"+null+",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
+            per.llenarPersona(contacto, autoImcremento());
+            sql = "INSERT INTO contactos(IDCONTACTO, TIPO_CONTACTO, PERSONA, EMAIL, ALIAS, ESTADO, FECHA_REGISTRO, FECHA_MODIFICACION, FECHA_IMPORTANTE, TIPO_FECHA, GRUPO, RELACION, SITIO_WEB, VISIBILIDAD) "
+                    + "VALUES (" + autoImcremento() + ", '" + contacto.getTipo_contacto() + "', " + autoImcremento() + ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "'," + null + ",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
         }
         conectar.ejecutar(sql);
     }
@@ -34,14 +33,14 @@ public class Ctr_Contactos {
     public void actualizarContacto(Mdl_Contactos contacto, int index) {
         Conexion conectar = new Conexion();
         CtrUtilitario util = new CtrUtilitario();
-        String sql="";
-        sql = "UPDATE Personas set Nombres ='" + contacto.getNombres()+"' where idPersona ="+index;
+        String sql = "";
+        sql = "UPDATE Personas set Nombres ='" + contacto.getNombres() + "' where idPersona =" + index;
         conectar.ejecutar(sql);
-        sql = "UPDATE Personas set apellidos ='" + contacto.getApellidos()+"' where idPersona = "+index;
+        sql = "UPDATE Personas set apellidos ='" + contacto.getApellidos() + "' where idPersona = " + index;
         conectar.ejecutar(sql);
-        sql = "UPDATE Personas set fecha_modificacion ='" +util.fechaHoy()+"' where idPersona = "+index;
+        sql = "UPDATE Personas set fecha_modificacion ='" + util.fechaHoy() + "' where idPersona = " + index;
         conectar.ejecutar(sql);
-        sql = "UPDATE contactos SET TIPO_CONTACTO ='" + contacto.getTipo_contacto() + "' WHERE IDCONTACTO =" + index;    
+        sql = "UPDATE contactos SET TIPO_CONTACTO ='" + contacto.getTipo_contacto() + "' WHERE IDCONTACTO =" + index;
         conectar.ejecutar(sql);
         sql = "UPDATE contactos SET EMAIL ='" + contacto.getEmail() + "' WHERE IDCONTACTO =" + index;
         conectar.ejecutar(sql);
@@ -64,12 +63,11 @@ public class Ctr_Contactos {
         sql = "UPDATE contactos SET VISIBILIDAD ='" + contacto.getVisibilidad() + "' WHERE IDCONTACTO =" + index;
         conectar.ejecutar(sql);
     }
-    
 
-    int autoImcremento(){
+    int autoImcremento() {
         Conexion conectar = new Conexion();
         int index = 0;
-        String sql = "select * from contactos";
+        String sql = "select IDCONTACTO from contactos";
         ResultSet rs = conectar.consultar(sql);
         try
         {
@@ -98,7 +96,7 @@ public class Ctr_Contactos {
 //        }else{
 //            sql = "SELECT * FROM contactos";
 //        }
-        ResultSet rs= conectar.consultar(sql);
+        ResultSet rs = conectar.consultar(sql);
         try
         {
             while (rs.next())
@@ -132,5 +130,32 @@ public class Ctr_Contactos {
             System.out.println(e);
         }
         return listacontac;
+    }
+
+    public void eliminar(int index) {
+        Conexion conectar = new Conexion();
+        ArrayList<Mdl_Contactos> lista = new ArrayList();
+        lista = consultarContactos();
+        lista.remove(index);
+        String sql;
+        try
+        {
+            sql = "delete from contactos where idcontacto >1";
+            conectar.ejecutar(sql);
+            sql = "delete from personas where idpersona >1";
+            conectar.ejecutar(sql);
+            for (int i = 0; i < lista.size() - 1; i++)
+            {
+                sql = sql = "INSERT INTO personas(idpersona,nombres,apellidos,Estado,fecha_registro,fecha_modificacion)Values(" + (i + 2) + ",'" + lista.get(i).getNombres() + "','" + lista.get(i).getApellidos() + "','" + lista.get(i).getEstado() + "','" + lista.get(i).getFecharegistro() + "','" + lista.get(i).getFechamodificacion() + "')";
+                conectar.ejecutar(sql);
+
+                sql = "INSERT INTO contactos(IDCONTACTO, TIPO_CONTACTO, PERSONA, EMAIL, ALIAS, ESTADO, FECHA_REGISTRO, FECHA_MODIFICACION, FECHA_IMPORTANTE, TIPO_FECHA, GRUPO, RELACION, SITIO_WEB, VISIBILIDAD) "
+                        + "VALUES (" + (i + 2) + ", '" + lista.get(i).getTipo_contacto() + "', " + (i + 2) + ",'" + lista.get(i).getEmail() + "', '" + lista.get(i).getAlias() + "', '" + lista.get(i).getConEstado() + "', '" + lista.get(i).getFecharegistro() + "','" + lista.get(i).getFechamodificacion() + "','" + lista.get(i).getFecha_importante() + "', '" + lista.get(i).getTipo_fecha() + "', '" + lista.get(i).getGrupo() + "', '" + lista.get(i).getRelacion() + "', '" + lista.get(i).getSitio_web() + "', '" + lista.get(i).getVisibilidad() + "')";
+                conectar.ejecutar(sql);
+            }
+        } catch (Exception e)
+        {
+        }
+
     }
 }
