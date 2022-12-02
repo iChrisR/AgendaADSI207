@@ -4,6 +4,7 @@ import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import model.Mdl_Contactos;
 import model.Mdl_Persona;
 import model.Mdl_User;
 
@@ -39,11 +40,20 @@ public class Ctr_Personas {
         CtrUtilitario fh = new CtrUtilitario();
         if (unAdministrador() == 1)
         {
-            String sql = "INSERT INTO personas(idpersona,nombres,apellidos,Estado,fecha_registro,fecha_modificacion)Values(" + 1 + ",'" + user.getNombres() + "','" + user.getApellidos() + "','" + user.getEstado() + "','" + fh.fechaHoy() + "'," + null + ")";
+            String sql = "INSERT INTO personas(idpersona,nombres,apellidos,Estado,fecha_registro,fecha_modificacion)Values(" +1+ ",'" + user.getNombres() + "','" + user.getApellidos() + "','" + user.getEstado() + "','" + fh.fechaHoy() + "'," + null + ")";
             conectar.ejecutar(sql);
         }
     }
+    public void llenarPersona(Mdl_Contactos mdl, int index) {
+        Ctr_Contactos cc = new Ctr_Contactos();
+        Conexion conectar = new Conexion();
+        CtrUtilitario fh = new CtrUtilitario();
+            String sql = "INSERT INTO personas(idpersona,nombres,apellidos,Estado,fecha_registro,fecha_modificacion)Values(" + index+ ",'" + mdl.getNombres() + "','" + mdl.getApellidos() + "','" + mdl.getEstado() + "','" + fh.fechaHoy() + "'," + null + ")";
+            conectar.ejecutar(sql);
+        
+    }
 
+   
     int unAdministrador() {
         Conexion conectar = new Conexion();
         int index = 0;

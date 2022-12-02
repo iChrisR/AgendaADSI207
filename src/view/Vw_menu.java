@@ -27,9 +27,11 @@ public class Vw_menu extends javax.swing.JFrame {
 
         pnl_body = new javax.swing.JPanel();
         pnl_footer = new javax.swing.JPanel();
-        mbr_menu = new javax.swing.JMenuBar();
+        mnb_menu = new javax.swing.JMenuBar();
         mn_usuarios = new javax.swing.JMenu();
         mnt_gestionusuarios = new javax.swing.JMenuItem();
+        mn_contactos = new javax.swing.JMenu();
+        mnt_gestionContactos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,7 +60,7 @@ public class Vw_menu extends javax.swing.JFrame {
 
         mn_usuarios.setText("Usuarios");
 
-        mnt_gestionusuarios.setText("Gesti�n  Usuarios");
+        mnt_gestionusuarios.setText("Gestión  Usuarios");
         mnt_gestionusuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnt_gestionusuariosActionPerformed(evt);
@@ -66,12 +68,24 @@ public class Vw_menu extends javax.swing.JFrame {
         });
         mn_usuarios.add(mnt_gestionusuarios);
 
-        mbr_menu.add(mn_usuarios);
+        mnb_menu.add(mn_usuarios);
+
+        mn_contactos.setText("Contactos");
+
+        mnt_gestionContactos.setText("Gestion de contactos");
+        mnt_gestionContactos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnt_gestionContactosActionPerformed(evt);
+            }
+        });
+        mn_contactos.add(mnt_gestionContactos);
+
+        mnb_menu.add(mn_contactos);
 
         jMenu2.setText("Edit");
-        mbr_menu.add(jMenu2);
+        mnb_menu.add(jMenu2);
 
-        setJMenuBar(mbr_menu);
+        setJMenuBar(mnb_menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,6 +110,11 @@ public class Vw_menu extends javax.swing.JFrame {
     private void mnt_gestionusuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnt_gestionusuariosActionPerformed
         AbrirGestionUsuarios();
     }//GEN-LAST:event_mnt_gestionusuariosActionPerformed
+
+    private void mnt_gestionContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnt_gestionContactosActionPerformed
+        Vw_contactos vco = new Vw_contactos(this, true);
+            vco.setVisible(true);
+    }//GEN-LAST:event_mnt_gestionContactosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,8 +153,10 @@ public class Vw_menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar mbr_menu;
+    private javax.swing.JMenu mn_contactos;
     private javax.swing.JMenu mn_usuarios;
+    private javax.swing.JMenuBar mnb_menu;
+    private javax.swing.JMenuItem mnt_gestionContactos;
     private javax.swing.JMenuItem mnt_gestionusuarios;
     private javax.swing.JPanel pnl_body;
     private javax.swing.JPanel pnl_footer;
