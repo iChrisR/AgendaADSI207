@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 
 public class Vw_menu extends javax.swing.JFrame {
 
+    
     public Vw_menu() {
         initComponents();
         this.setLocationRelativeTo(null);

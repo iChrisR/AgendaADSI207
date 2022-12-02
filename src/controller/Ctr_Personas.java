@@ -10,6 +10,7 @@ import model.Mdl_User;
 
 public class Ctr_Personas {
 
+    
     public Mdl_Persona consultar(int id) {
         Conexion conectar = new Conexion();
         Mdl_Persona persona = new Mdl_Persona();

@@ -15,6 +15,7 @@ public class Mdl_Contactos extends Mdl_Persona{
     private String sitio_web;
     private String visibilidad;
 
+    
     public Mdl_Contactos(int idcontacto, String tipo_contacto, int persona, String email, String alias, String conEstado, String conFecha_registro, String conFecha_modificacion, String fecha_importante, String tipo_fecha, String grupo, String relacion, String sitio_web, String visibilidad) {
         this.idcontacto = idcontacto;
         this.tipo_contacto = tipo_contacto;

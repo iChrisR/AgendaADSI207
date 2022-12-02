@@ -68,6 +68,7 @@ public class Vw_contactos extends javax.swing.JDialog {
         listacont = ctc.consultarContactos();
         for (int i = 0; i < listacont.size(); i++)
         {
+            
             tbl_contactos.setValueAt(listacont.get(i).getIdcontacto(), i, 0);
             tbl_contactos.setValueAt(listacont.get(i).getNombres(), i, 1);
             tbl_contactos.setValueAt(listacont.get(i).getApellidos(), i, 2);

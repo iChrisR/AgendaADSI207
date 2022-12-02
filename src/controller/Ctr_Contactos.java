@@ -64,6 +64,7 @@ public class Ctr_Contactos {
         sql = "UPDATE contactos SET VISIBILIDAD ='" + contacto.getVisibilidad() + "' WHERE IDCONTACTO =" + index;
         conectar.ejecutar(sql);
     }
+    
 
     int autoImcremento(){
         Conexion conectar = new Conexion();
