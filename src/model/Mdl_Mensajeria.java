@@ -1,26 +1,22 @@
 package model;
 
-public class Mdl_Mensajeria {
-
-  private String contacto;
+public class Mdl_Mensajeria extends Mdl_Contactos {
+  
   private String asunto;
   private String mensaje;
 
-  public Mdl_Mensajeria(String contacto, String asunto, String mensaje) {
-    this.contacto = contacto;
+  public Mdl_Mensajeria(String asunto, String mensaje) {
     this.asunto = asunto;
     this.mensaje = mensaje;
   }
-
+  
+  public Mdl_Mensajeria(String asunto, String mensaje, int idcontacto, String email, int idpersona, String nombres, String apellidos) {
+    super(idcontacto, email, idpersona, nombres, apellidos);
+    this.asunto = asunto;
+    this.mensaje = mensaje;
+  }
+  
   public Mdl_Mensajeria() {
-  }
-
-  public String getContacto() {
-    return contacto;
-  }
-
-  public void setContacto(String contacto) {
-    this.contacto = contacto;
   }
 
   public String getAsunto() {
