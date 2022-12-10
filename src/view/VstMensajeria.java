@@ -1,12 +1,26 @@
 
 package view;
 
+import java.util.ArrayList;
+import model.Mdl_Contactos;
+import controller.Ctr_Contactos;
+
 public class VstMensajeria extends javax.swing.JFrame {
 
   public VstMensajeria() {
     initComponents();
+    listarContactos();
   }
-
+  
+  public void listarContactos(){
+    
+    Ctr_Contactos contacto = new Ctr_Contactos();
+    ArrayList<Mdl_Contactos> listaContactos = contacto.consultarContactos();
+    for (int i = 0; i < listaContactos.size(); i++){
+      cmbPara.addItem(listaContactos.get(i).getNombres() + " " + listaContactos.get(i).getApellidos());
+    }
+  }
+  
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
