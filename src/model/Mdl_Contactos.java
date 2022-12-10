@@ -51,8 +51,8 @@ public class Mdl_Contactos extends Mdl_Persona{
         this.visibilidad = visibilidad;
     }
   
-    public Mdl_Contactos(int idcontacto, String email, int idpersona, String nombres, String apellidos){
-        super(idpersona, nombres, apellidos);
+    public Mdl_Contactos(int idcontacto, String email, String nombres, String apellidos){
+        super(nombres, apellidos);
         this.idcontacto = idcontacto;
         this.email = email;
     }

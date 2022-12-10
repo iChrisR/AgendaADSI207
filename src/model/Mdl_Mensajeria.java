@@ -10,8 +10,8 @@ public class Mdl_Mensajeria extends Mdl_Contactos {
     this.mensaje = mensaje;
   }
   
-  public Mdl_Mensajeria(String asunto, String mensaje, int idcontacto, String email, int idpersona, String nombres, String apellidos) {
-    super(idcontacto, email, idpersona, nombres, apellidos);
+  public Mdl_Mensajeria(String asunto, String mensaje, int idcontacto, String email, String nombres, String apellidos) {
+    super(idcontacto, email, nombres, apellidos);
     this.asunto = asunto;
     this.mensaje = mensaje;
   }
