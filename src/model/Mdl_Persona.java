@@ -19,11 +19,6 @@ public class Mdl_Persona {
         this.fechamodificacion = fechamodificacion;
         this.estado = estado;
     }
-    
-    public Mdl_Persona(String nombres, String apellidos) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-    }
 
     public int getIdpersona() {
         return idpersona;
