@@ -156,7 +156,6 @@ public class Vw_almacenNotas extends javax.swing.JDialog {
                 TblNotas.setValueAt(Nota.get(i).getTipo_nota(), i, 4);
             }
         }
-
     }
 
     /**
