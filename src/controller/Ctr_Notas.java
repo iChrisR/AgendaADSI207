@@ -144,7 +144,7 @@ public class Ctr_Notas {
 
     public void eliminar(Mdl_Notas modelo) {
         Conexion conectar = new Conexion();
-        String sql = "Delete from Notas where TITULO='" + modelo.getTitulo() + "'";
+        String sql = "Delete from Notas where TITULO='" + modelo.getTitulo()+ "'";
         conectar.ejecutar(sql);
         //aqui voy a traer todos los id para reiniciarlos
         String sql2 = "SELECT * FROM NOTAS";
