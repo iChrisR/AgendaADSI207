@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="1000" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e279a7ca-a0d4-4b7c-9e57-5ae96bce9d36">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="239"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     CITAS."IDCITA" AS CITAS_IDCITA,
+     CITAS."TITULO" AS CITAS_TITULO,
+     CITAS."DESCRIPCION" AS CITAS_DESCRIPCION,
+     CITAS."FECHA_CITA" AS CITAS_FECHA_CITA,
+     CITAS."HORA_CITA" AS CITAS_HORA_CITA,
+     CITAS."TIPO_CITA" AS CITAS_TIPO_CITA,
+     CITAS."ESTADO" AS CITAS_ESTADO,
+     CITAS."FECHA_REGISTRO" AS CITAS_FECHA_REGISTRO,
+     CITAS."FECHA_MODIFICACION" AS CITAS_FECHA_MODIFICACION,
+     CITAS."UBICACION" AS CITAS_UBICACION,
+     CITAS."REPETICION" AS CITAS_REPETICION,
+     CITAS."ZONA_HORARIA" AS CITAS_ZONA_HORARIA,
+     CITAS."VISIBILIDAD" AS CITAS_VISIBILIDAD
+FROM
+     "JAIME"."CITAS" CITAS]]>
+	</queryString>
+	<field name="CITAS_IDCITA" class="java.lang.Integer"/>
+	<field name="CITAS_TITULO" class="java.lang.String"/>
+	<field name="CITAS_DESCRIPCION" class="java.lang.String"/>
+	<field name="CITAS_FECHA_CITA" class="java.lang.String"/>
+	<field name="CITAS_HORA_CITA" class="java.lang.String"/>
+	<field name="CITAS_TIPO_CITA" class="java.lang.String"/>
+	<field name="CITAS_ESTADO" class="java.lang.String"/>
+	<field name="CITAS_FECHA_REGISTRO" class="java.lang.String"/>
+	<field name="CITAS_FECHA_MODIFICACION" class="java.lang.String"/>
+	<field name="CITAS_UBICACION" class="java.lang.String"/>
+	<field name="CITAS_REPETICION" class="java.lang.String"/>
+	<field name="CITAS_ZONA_HORARIA" class="java.lang.String"/>
+	<field name="CITAS_VISIBILIDAD" class="java.lang.String"/>
+	<variable name="CITAS_TITULO_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{CITAS_TITULO}]]></variableExpression>
+	</variable>
+	<variable name="CITAS_DESCRIPCION_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{CITAS_DESCRIPCION}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="149" y="0" width="269" height="43" uuid="59269e1d-dd3b-4c2b-8960-3f6c1940a140"/>
+				<box>
+					<pen lineColor="#3399FF"/>
+					<topPen lineColor="#3399FF"/>
+					<leftPen lineColor="#3399FF"/>
+					<bottomPen lineColor="#3399FF"/>
+					<rightPen lineColor="#3399FF"/>
+				</box>
+				<textElement>
+					<font fontName="Book Antiqua" size="32" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE CITAS]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="6c074200-3127-4629-82b5-098894c5e0b7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="10" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="6" width="53" height="20" uuid="899fbe0e-742e-4e86-83de-072a7dc1d4ad"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="6" width="53" height="20" uuid="5839793d-08ee-4621-9e5e-f44c0bc43a25"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TITULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="6" width="86" height="20" uuid="fb1ef3b8-77df-4ccb-8a6a-d89d1a83ca3e"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="254" y="6" width="64" height="20" uuid="d368338c-49fa-4e50-9f2d-cb739e792094"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="6" width="62" height="20" uuid="ef257337-f101-4245-85a9-9bcbeb1d5092"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="6" width="50" height="20" uuid="28de58ac-c50b-4584-baea-c4cd38ad1446"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="6" width="76" height="20" uuid="7c00ae7a-b338-4b4b-bed2-5f4027f14943"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UBICACION]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="-10" y="2" width="53" height="20" uuid="ccdc317f-011d-47c1-b1e1-068e1eaf119f"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_IDCITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="2" width="40" height="20" uuid="a538d662-7d81-4f85-89a9-050211a08751"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="2" width="64" height="20" uuid="66a66306-35fd-4fda-99a5-0aa60c1cf549"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="2" width="64" height="20" uuid="c3311985-8456-41b7-8b30-03dfc86e208b"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_FECHA_CITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="2" width="62" height="20" uuid="d316f08f-837f-4488-9160-56f793d011f2"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_HORA_CITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="2" width="40" height="20" uuid="7f84733e-99f8-4912-9406-e487bd9bc701"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_TIPO_CITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="2" width="41" height="20" uuid="46d95338-e469-457f-a9ce-273427bf2331"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITAS_UBICACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="33" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="290" y="8" width="52" height="20" uuid="84be2b06-a1d3-4b64-a511-6a79b60cb98e"/>
+				<textElement>
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="8" width="80" height="20" uuid="a3b725a3-1ea6-4960-aac4-5e866a07ef2b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Book Antiqua" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
