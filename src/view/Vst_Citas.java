@@ -2,10 +2,20 @@ package view;
 
 import conexion.Conexion;
 import controller.Ctr_Citas;
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.WindowConstants;
 import model.Mdl_Citas;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 public class Vst_Citas extends javax.swing.JFrame {
@@ -65,10 +75,31 @@ public class Vst_Citas extends javax.swing.JFrame {
         txtRecordatorio.setText("");
     }
     
-    void reporte (){
-        Conexion con = new Conexion();        
+   void reporte() {
+       
+        try {
+            Connection con = Conexion.getConnection();
+            JasperReport reporte = null;
+
+            String path = "src\\reporte\\ReporteCitas.jasper";
+            
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, con);
+
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+
+            view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            
+            view.setVisible(true);
+            
+        } catch (JRException ex) {
+            
+            Logger.getLogger(Vst_AlmacenCitas.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -105,8 +136,9 @@ public class Vst_Citas extends javax.swing.JFrame {
         rbtInactivo = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         cbbTipocita = new javax.swing.JComboBox<>();
-        btnVerCitas = new javax.swing.JButton();
         btnlimpiar = new javax.swing.JButton();
+        btnReporte = new javax.swing.JButton();
+        btnVerCitas = new javax.swing.JButton();
         label1 = new java.awt.Label();
 
         jScrollPane1.setViewportView(jEditorPane1);
@@ -128,7 +160,7 @@ public class Vst_Citas extends javax.swing.JFrame {
         lblFecha.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblFecha.setText("FECHA CITA:");
 
-        txtFechaC.setText("dd/mm/aaa");
+        txtFechaC.setText("dd/mm/aaaa");
         txtFechaC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFechaCActionPerformed(evt);
@@ -188,23 +220,15 @@ public class Vst_Citas extends javax.swing.JFrame {
         });
 
         buttonGroup2.add(rbtActivo);
-        rbtActivo.setText("ACTIVO");
+        rbtActivo.setText("ACTIVA");
 
         buttonGroup2.add(rbtInactivo);
-        rbtInactivo.setText("INACTIVO");
+        rbtInactivo.setText("INACTIVA");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButton1.setText("Recordar Cita");
 
         cbbTipocita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de cita", "Reunion", "Escolar", "Medica", "Trabajo" }));
-
-        btnVerCitas.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnVerCitas.setText("Ver Citas");
-        btnVerCitas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerCitasActionPerformed(evt);
-            }
-        });
 
         btnlimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnlimpiar.setText("Limpiar");
@@ -214,56 +238,85 @@ public class Vst_Citas extends javax.swing.JFrame {
             }
         });
 
+        btnReporte.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnReporte.setText("Reporte Citas");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+
+        btnVerCitas.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnVerCitas.setText("Ver Citas");
+        btnVerCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerCitasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlAgendaLayout = new javax.swing.GroupLayout(pnlAgenda);
         pnlAgenda.setLayout(pnlAgendaLayout);
         pnlAgendaLayout.setHorizontalGroup(
             pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAgendaLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitulo)
-                    .addComponent(lblDescripcion)
-                    .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblFecha)
-                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTcita)
-                            .addComponent(lblHora)
-                            .addComponent(jLabel1))))
-                .addGap(18, 18, 18)
-                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbTipocita, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFechaC, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbtActivo)
-                    .addComponent(rbtInactivo))
-                .addGap(46, 46, 46)
-                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblVisibilidad)
+                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlAgendaLayout.createSequentialGroup()
-                        .addComponent(btnVerCitas)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnlimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlAgendaLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                        .addGap(29, 29, 29)
                         .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RbtPrivado)
-                            .addComponent(RbtPublico)
+                            .addComponent(lblTitulo)
+                            .addComponent(lblDescripcion)
+                            .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblFecha)
+                                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTcita)
+                                    .addComponent(lblHora)
+                                    .addComponent(jLabel1))))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlAgendaLayout.createSequentialGroup()
+                                .addComponent(rbtActivo)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(pnlAgendaLayout.createSequentialGroup()
                                 .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblZonaHoraria)
-                                    .addComponent(lblUbicacion)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtHora)
+                                        .addComponent(txtFechaC)
+                                        .addComponent(cbbTipocita, 0, 216, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtZonaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtRecordatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(lblVisibilidad)
+                                    .addGroup(pnlAgendaLayout.createSequentialGroup()
+                                        .addGap(13, 13, 13)
+                                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(RbtPrivado)
+                                            .addComponent(RbtPublico)))
+                                    .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnVerCitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnlimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(pnlAgendaLayout.createSequentialGroup()
+                                            .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lblZonaHoraria)
+                                                .addComponent(lblUbicacion)
+                                                .addComponent(jLabel2))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                                                .addComponent(txtZonaHoraria)
+                                                .addComponent(txtRecordatorio))))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlAgendaLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(rbtInactivo))
+                    .addGroup(pnlAgendaLayout.createSequentialGroup()
+                        .addGap(0, 95, Short.MAX_VALUE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(384, 384, 384)))
+                .addGap(23, 23, 23))
         );
         pnlAgendaLayout.setVerticalGroup(
             pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,18 +324,11 @@ public class Vst_Citas extends javax.swing.JFrame {
                 .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAgendaLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTitulo)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(lblDescripcion))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAgendaLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblUbicacion)
-                            .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlAgendaLayout.createSequentialGroup()
+                                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblUbicacion)
+                                    .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(8, 8, 8)
                                 .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblZonaHoraria)
@@ -292,47 +338,54 @@ public class Vst_Citas extends javax.swing.JFrame {
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtRecordatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnlAgendaLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(9, 9, 9)))
-                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblTitulo)
+                                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(lblDescripcion)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAgendaLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)))
+                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlAgendaLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFecha)
-                            .addComponent(txtFechaC, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblHora))
+                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlAgendaLayout.createSequentialGroup()
+                                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblFecha)
+                                    .addComponent(txtFechaC, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15)
+                                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblHora)))
+                            .addGroup(pnlAgendaLayout.createSequentialGroup()
+                                .addComponent(lblVisibilidad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RbtPrivado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RbtPublico)))
                         .addGap(20, 20, 20)
                         .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTcita)
-                            .addComponent(cbbTipocita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlAgendaLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(lblVisibilidad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(RbtPrivado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(RbtPublico)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlAgendaLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnVerCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnlimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbbTipocita, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlAgendaLayout.createSequentialGroup()
                         .addGroup(pnlAgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rbtActivo)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbtInactivo)
-                        .addContainerGap())))
+                        .addGap(87, 87, 87)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlAgendaLayout.createSequentialGroup()
+                        .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVerCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnlimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         label1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -348,8 +401,8 @@ public class Vst_Citas extends javax.swing.JFrame {
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addComponent(pnlAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,7 +411,7 @@ public class Vst_Citas extends javax.swing.JFrame {
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(pnlAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -396,6 +449,10 @@ public class Vst_Citas extends javax.swing.JFrame {
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
         limpiar();
     }//GEN-LAST:event_btnlimpiarActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        reporte();
+    }//GEN-LAST:event_btnReporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -436,6 +493,7 @@ public class Vst_Citas extends javax.swing.JFrame {
     private javax.swing.JRadioButton RbtPrivado;
     private javax.swing.JRadioButton RbtPublico;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JButton btnVerCitas;
     private javax.swing.JButton btnlimpiar;
     private javax.swing.ButtonGroup buttonGroup1;

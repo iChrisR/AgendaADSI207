@@ -8,12 +8,15 @@ package view;
 import conexion.Conexion;
 import conexion.Configuracion;
 import controller.Ctr_Citas;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import model.Mdl_Citas;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -75,7 +78,7 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         txtIdcita.setText(tblCitas.getValueAt(fila, 0).toString());
         txtTitulocita.setText(String.valueOf(tblCitas.getValueAt(fila, 1)));
         txtDescripcioncita.setText(String.valueOf(tblCitas.getValueAt(fila, 2)));
-        txtFechacita.setText(String.valueOf(tblCitas.getValueAt(fila, 3)));
+        txtfechacita.setText(String.valueOf(tblCitas.getValueAt(fila, 3)));
         txtHoracita.setText(String.valueOf(tblCitas.getValueAt(fila, 4)));
         txtUbicacioncita.setText(String.valueOf(tblCitas.getValueAt(fila, 7)));
     }
@@ -85,14 +88,12 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         modelo.setIdCitas(Integer.parseInt(txtIdcita.getText()));
         modelo.setTituloCita(txtTitulocita.getText().toLowerCase());
         modelo.setDescripcionCita(txtDescripcioncita.getText());
-        modelo.setFecha_modificacionCita(control.fechaHoy());
         modelo.setTipo_cita(cbbTipocita.getSelectedItem().toString());
-        modelo.setFecha_cita(txtFechacita.getText());
+        modelo.setFecha_cita(txtfechacita.getText());
         modelo.setHora_cita(txtHoracita.getText());
         modelo.setUbicacion_cita(txtUbicacioncita.getText());
         control.modificar(modelo);
         if (RbtPrivado.isSelected()) {
-
             Citas_Privadas();
         } else {
             llenarTablaUser();
@@ -103,7 +104,7 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         txtIdcita.setText("");
         txtTitulocita.setText("");
         txtDescripcioncita.setText("");
-        txtFechacita.setText("");
+        txtfechacita.setText("");
         txtHoracita.setText("");
         txtUbicacioncita.setText("");
         if (RbtPrivado.isSelected()) {
@@ -139,22 +140,22 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
     }
 
     void BuscarCitas() {
-        ArrayList<Mdl_Citas> Citas = new ArrayList();
-        modelo.setTituloCita(txtBuscarCita.getText().toLowerCase());
-        Citas = control.buscarCitas(modelo);
-        if (Citas.isEmpty()) {
+        ArrayList<Mdl_Citas> citas = new ArrayList();
+        modelo.setTituloCita(txtBuscar.getText().toLowerCase());
+        citas = control.buscarCitas(modelo);
+        if (citas.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No fue posible encontrar la cita");
         } else {
             borrarTabla();
-            for (int i = 0; i < Citas.size(); i++) {
-                tblCitas.setValueAt(Citas.get(i).getIdCitas(), i, 0);
-                tblCitas.setValueAt(Citas.get(i).getTituloCita(), i, 1);
-                tblCitas.setValueAt(Citas.get(i).getDescripcionCita(), i, 2);
-                tblCitas.setValueAt(Citas.get(i).getFecha_cita(), i, 3);
-                tblCitas.setValueAt(Citas.get(i).getHora_cita(), i, 4);
-                tblCitas.setValueAt(Citas.get(i).getTipo_cita(), i, 5);
-                tblCitas.setValueAt(Citas.get(i).getFecha_registroCita(), i, 6);
-                tblCitas.setValueAt(Citas.get(i).getUbicacion_cita(), i, 7);
+            for (int i = 0; i < citas.size(); i++) {
+                tblCitas.setValueAt(citas.get(i).getIdCitas(), i, 0);
+                tblCitas.setValueAt(citas.get(i).getTituloCita(), i, 1);
+                tblCitas.setValueAt(citas.get(i).getDescripcionCita(), i, 2);
+                tblCitas.setValueAt(citas.get(i).getFecha_cita(), i, 3);
+                tblCitas.setValueAt(citas.get(i).getHora_cita(), i, 4);
+                tblCitas.setValueAt(citas.get(i).getTipo_cita(), i, 5);
+                tblCitas.setValueAt(citas.get(i).getFecha_registroCita(), i, 6);
+                tblCitas.setValueAt(citas.get(i).getUbicacion_cita(), i, 7);
             }
         }
     }
@@ -175,27 +176,7 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
 
     }
 
-    void reporte() {
-
-        try {
-            Conexion con = new Conexion();
-
-            JasperReport reporte = null;
-            String path = "src//reporte/ReporteCitas.jasper";
-
-            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, null);
-
-            JasperViewer view = new JasperViewer(jprint, false);
-
-            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            view.setVisible(true);
-        } catch (JRException ex) {
-            Logger.getLogger(Vst_AlmacenCitas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -215,9 +196,9 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         cbbTipocita = new javax.swing.JComboBox<>();
         txtIdcita = new javax.swing.JTextField();
         txtHoracita = new javax.swing.JTextField();
-        txtFechacita = new javax.swing.JTextField();
+        txtfechacita = new javax.swing.JTextField();
         txtUbicacioncita = new javax.swing.JTextField();
-        txtBuscarCita = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -225,14 +206,13 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        btnModificar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
+        btnmodificar = new javax.swing.JButton();
+        btnbuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btneliminar = new javax.swing.JButton();
         RbtPrivado = new javax.swing.JRadioButton();
-        RbtPublicas = new javax.swing.JRadioButton();
+        RbtPublica = new javax.swing.JRadioButton();
         lbltitulo = new javax.swing.JLabel();
-        btnReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -244,11 +224,10 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(txtDescripcioncita, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(0, 84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,6 +293,14 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
 
         cbbTipocita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de cita", "Reunion", "Escolar", "Medica", "Trabajo" }));
 
+        txtfechacita.setText("dd/mm/aaaa");
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("ID");
 
@@ -335,14 +322,19 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel8.setText("HORA CITA");
 
-        btnModificar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnModificar.setText("Modificar");
-
-        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnmodificar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnmodificar.setText("Modificar");
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                btnmodificarActionPerformed(evt);
+            }
+        });
+
+        btnbuscar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
             }
         });
 
@@ -354,8 +346,13 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnEliminar.setText("Eliminar");
+        btneliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btneliminar.setText("Eliminar");
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(RbtPrivado);
         RbtPrivado.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -366,24 +363,16 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
             }
         });
 
-        buttonGroup1.add(RbtPublicas);
-        RbtPublicas.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        RbtPublicas.setText("Citas Publicas");
-        RbtPublicas.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(RbtPublica);
+        RbtPublica.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        RbtPublica.setText("Citas Publicas");
+        RbtPublica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RbtPublicasActionPerformed(evt);
+                RbtPublicaActionPerformed(evt);
             }
         });
 
         lbltitulo.setText("Citas Guardadas:");
-
-        btnReporte.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnReporte.setText("Reporte de Citas");
-        btnReporte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -409,10 +398,9 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
                                         .addGap(118, 118, 118)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel7)
-                                            .addComponent(txtFechacita, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                                            .addComponent(txtfechacita, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                                             .addComponent(txtHoracita)
-                                            .addComponent(jLabel8)
-                                            .addComponent(btnReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jLabel8))
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,29 +408,27 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5)
                                     .addComponent(txtUbicacioncita, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtBuscarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(btnBuscar)
+                        .addComponent(btnbuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar)
+                        .addComponent(btnmodificar)
                         .addGap(20, 20, 20)
-                        .addComponent(btnEliminar)
+                        .addComponent(btneliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLimpiar)
                         .addGap(79, 79, 79)
                         .addComponent(RbtPrivado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RbtPublicas)))
+                        .addComponent(RbtPublica)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(lbltitulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbltitulo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -467,7 +453,7 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFechacita, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtfechacita, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -483,21 +469,19 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtBuscarCita, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(lbltitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnBuscar)
+                    .addComponent(btnmodificar)
+                    .addComponent(btnbuscar)
                     .addComponent(btnLimpiar)
-                    .addComponent(btnEliminar)
+                    .addComponent(btneliminar)
                     .addComponent(RbtPrivado)
-                    .addComponent(RbtPublicas))
+                    .addComponent(RbtPublica))
                 .addGap(18, 18, 18))
         );
 
@@ -514,37 +498,38 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
         Citas_Privadas();
     }//GEN-LAST:event_RbtPrivadoActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
         eliminar();
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_btneliminarActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
         modificar();
-    }//GEN-LAST:event_btnModificarActionPerformed
+    }//GEN-LAST:event_btnmodificarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         BuscarCitas();
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitasMouseClicked
-        visualizar();        // TODO add your handling code here:
+        visualizar();
     }//GEN-LAST:event_tblCitasMouseClicked
 
     private void txtFechacitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechacitaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechacitaActionPerformed
 
-    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        reporte();
-    }//GEN-LAST:event_btnReporteActionPerformed
+    private void RbtPublicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RbtPublicaActionPerformed
+        borrarTabla();
+        llenarTablaUser();
+    }//GEN-LAST:event_RbtPublicaActionPerformed
 
-    private void RbtPublicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RbtPublicasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RbtPublicasActionPerformed
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -591,12 +576,11 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RbtPrivado;
-    private javax.swing.JRadioButton RbtPublicas;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JRadioButton RbtPublica;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnReporte;
+    private javax.swing.JButton btnbuscar;
+    private javax.swing.JButton btneliminar;
+    private javax.swing.JButton btnmodificar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbTipocita;
     private javax.swing.JLabel jLabel1;
@@ -611,12 +595,12 @@ public class Vst_AlmacenCitas extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbltitulo;
     private javax.swing.JTable tblCitas;
-    private javax.swing.JTextField txtBuscarCita;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDescripcioncita;
-    private javax.swing.JTextField txtFechacita;
     private javax.swing.JTextField txtHoracita;
     private javax.swing.JTextField txtIdcita;
     private javax.swing.JTextField txtTitulocita;
     private javax.swing.JTextField txtUbicacioncita;
+    private javax.swing.JTextField txtfechacita;
     // End of variables declaration//GEN-END:variables
 }
