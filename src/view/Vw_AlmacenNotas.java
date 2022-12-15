@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
  *
  * @author joan
  */
-public class Vw_almacenNotas extends javax.swing.JDialog {
+public class Vw_AlmacenNotas extends javax.swing.JDialog {
 
     Ctr_Notas Ctr = new Ctr_Notas();
     Mdl_Notas Mdl = new Mdl_Notas();
     ArrayList<Mdl_Notas> listaNotas = new ArrayList();
     int index;
 
-    public Vw_almacenNotas(java.awt.Frame parent, boolean modal) {
+    public Vw_AlmacenNotas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 

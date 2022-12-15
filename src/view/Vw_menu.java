@@ -26,6 +26,7 @@ public class Vw_menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         pnl_body = new javax.swing.JPanel();
         pnl_footer = new javax.swing.JPanel();
         mnb_menu = new javax.swing.JMenuBar();
@@ -34,6 +35,10 @@ public class Vw_menu extends javax.swing.JFrame {
         mn_contactos = new javax.swing.JMenu();
         mnt_gestionContactos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        VstNotas = new javax.swing.JMenu();
+        MntNotas = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,6 +91,23 @@ public class Vw_menu extends javax.swing.JFrame {
         jMenu2.setText("Edit");
         mnb_menu.add(jMenu2);
 
+        VstNotas.setText("Notas");
+        VstNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VstNotasActionPerformed(evt);
+            }
+        });
+
+        MntNotas.setText("Ver notas");
+        MntNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MntNotasActionPerformed(evt);
+            }
+        });
+        VstNotas.add(MntNotas);
+
+        mnb_menu.add(VstNotas);
+
         setJMenuBar(mnb_menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -116,6 +138,18 @@ public class Vw_menu extends javax.swing.JFrame {
         Vw_contactos vco = new Vw_contactos(this, true);
             vco.setVisible(true);
     }//GEN-LAST:event_mnt_gestionContactosActionPerformed
+
+    private void VstNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VstNotasActionPerformed
+        // TODO add your handling code here:
+       
+        
+    }//GEN-LAST:event_VstNotasActionPerformed
+
+    private void MntNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MntNotasActionPerformed
+        // TODO add your handling code here:
+         Vw_Notas vn =  new Vw_Notas();
+         vn.setVisible(true);
+    }//GEN-LAST:event_MntNotasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,7 +187,10 @@ public class Vw_menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MntNotas;
+    private javax.swing.JMenu VstNotas;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu mn_contactos;
     private javax.swing.JMenu mn_usuarios;
     private javax.swing.JMenuBar mnb_menu;

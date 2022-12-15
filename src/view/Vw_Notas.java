@@ -21,7 +21,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
-//import view.VstRecordatorio;
+import view.VstRecordatorio;
 
 /**
  *
@@ -654,8 +654,8 @@ public class Vw_Notas extends javax.swing.JFrame {
 
     private void btnRecordatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordatoriosActionPerformed
         // TODO add your handling code here:
-//        VstRecordatorio recordatorio = new VstRecordatorio();
-//        recordatorio.setVisible(true);
+        VstRecordatorio recordatorio = new VstRecordatorio();
+        recordatorio.setVisible(true);
     }//GEN-LAST:event_btnRecordatoriosActionPerformed
 
     /**

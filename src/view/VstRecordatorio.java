@@ -5,7 +5,7 @@
 package view;
 
 import java.util.Date;
-import modeloo.MdlRecordatorios;
+
 /**
  *
  * @author fofom
