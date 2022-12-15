@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="1000" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e279a7ca-a0d4-4b7c-9e57-5ae96bce9d36">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="239"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -66,6 +66,10 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="11" y="-10" width="113" height="79" uuid="92677d3a-2b6d-4f0c-a732-2f00bca4690f"/>
+				<imageExpression><![CDATA["C:\\Users\\Sharik\\Downloads\\LOGO.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -95,7 +99,7 @@ FROM
 				<text><![CDATA[TITULO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="149" y="6" width="86" height="20" uuid="fb1ef3b8-77df-4ccb-8a6a-d89d1a83ca3e"/>
+				<reportElement x="149" y="6" width="92" height="20" uuid="fb1ef3b8-77df-4ccb-8a6a-d89d1a83ca3e"/>
 				<textElement>
 					<font fontName="Book Antiqua" size="12" isBold="true"/>
 				</textElement>
