@@ -71,7 +71,24 @@ public class Ctr_Notas {
         id2++;
         return id2;
     }
-
+public int tipo_user(){
+       int tipo =0;
+     Conexion conectar = new Conexion();
+     String sql = "Select TIPO_USER from USERS where IDUSER=1";
+      ResultSet rs =null;
+      
+      rs = conectar.consultar(sql);
+    
+        try {
+            while(rs.next()){
+               tipo = rs.getInt("TIPO_USER");
+            }
+        } catch (Exception e) {
+            System.out.println("error al buscar el tipo de usuario "+ e);
+        }
+       
+       return tipo;
+    }
     public void Guardar(Mdl_Notas Notas) {
 
         Conexion conectar = new Conexion();
@@ -261,4 +278,5 @@ public class Ctr_Notas {
 
         return cantidad;
     }
+    
 }

@@ -31,7 +31,12 @@ public class Vw_almacenNotas extends javax.swing.JDialog {
     void inicio() {
         this.setTitle("Almacen de notas");
         this.setLocationRelativeTo(null);
-        llenarTablaUser();
+      if (Ctr.tipo_user() == 1) {
+            llenarTablaUser();
+        } else {
+            RbtPrivado.setEnabled(false);
+            llenarTablaUser();
+        }
 
     }
 
