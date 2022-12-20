@@ -79,7 +79,7 @@
                       <Component id="pnl_labels1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pnl_botones" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="pnl_botones" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="179" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -313,12 +313,11 @@
             <Component class="javax.swing.JComboBox" name="cbx_tipoContacto">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="4">
                     <StringItem index="0" value="Contacto"/>
                     <StringItem index="1" value="Familiar"/>
                     <StringItem index="2" value="Amigo"/>
                     <StringItem index="3" value="Empresarial"/>
-                    <StringItem index="4" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -383,7 +382,7 @@
           <SubComponents>
             <Component class="javax.swing.JRadioButton" name="rb_publico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="publico"/>
+                <Property name="text" type="java.lang.String" value="Publico"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rb_publicoActionPerformed"/>
@@ -498,7 +497,7 @@
                           <Component id="btn_eliminar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_limpiar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

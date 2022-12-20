@@ -164,7 +164,7 @@
             <Component class="javax.swing.JButton" name="btnAceptar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenes/bolitabn (2).png"/>
+                  <Image iconType="3" name="/imagenes/bolitabn.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="ACEPTAR"/>
               </Properties>
@@ -178,7 +178,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/user (1).png"/>
+              <Image iconType="3" name="/imagenes/user.png"/>
             </Property>
           </Properties>
         </Component>

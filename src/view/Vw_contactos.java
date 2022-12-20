@@ -1,5 +1,6 @@
 package view;
 
+import controller.CtrUtilitario;
 import controller.Ctr_Contactos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -10,14 +11,24 @@ import model.Mdl_Contactos;
  * @author dragnell
  */
 public class Vw_contactos extends javax.swing.JDialog {
-
     ArrayList<Mdl_Contactos> listacont = new ArrayList();
-
     public Vw_contactos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         cargarTabla();
+        permisos();
+    }
+
+    void permisos() {
+        CtrUtilitario util = new CtrUtilitario();
+        if (util.retornarUsuario() == 2) {
+            btn_eliminar.setEnabled(false);
+            btn_guardar.setEnabled(false);
+            btn_limpiar.setEnabled(false);
+            btn_modificar.setEnabled(false);
+
+        }
     }
 
     void guardarContacto() {
@@ -36,12 +47,10 @@ public class Vw_contactos extends javax.swing.JDialog {
         contac.setGrupo(txt_grupo.getText());
         contac.setRelacion(txt_relacion.getText());
         contac.setSitio_web(txt_sitioWeb.getText());
-        if (rb_privado.isSelected())
-        {
-            contac.setVisibilidad("1");
-        } else
-        {
+        if (rb_privado.isSelected()) {
             contac.setVisibilidad("2");
+        } else {
+            contac.setVisibilidad("1");
         }
         ctc.ingresarContacto(contac);
         limpiarTabla();
@@ -50,8 +59,7 @@ public class Vw_contactos extends javax.swing.JDialog {
     }
 
     void limpiarTabla() {
-        for (int p = 0; p < 100; p++)
-        {
+        for (int p = 0; p < 100; p++) {
             tbl_contactos.setValueAt("", p, 0);
             tbl_contactos.setValueAt("", p, 1);
             tbl_contactos.setValueAt("", p, 2);
@@ -64,8 +72,7 @@ public class Vw_contactos extends javax.swing.JDialog {
     void cargarTabla() {
         Ctr_Contactos ctc = new Ctr_Contactos();
         listacont = ctc.consultarContactos();
-        for (int i = 0; i < listacont.size(); i++)
-        {
+        for (int i = 0; i < listacont.size(); i++) {
 
             tbl_contactos.setValueAt(listacont.get(i).getIdcontacto(), i, 0);
             tbl_contactos.setValueAt(listacont.get(i).getNombres(), i, 1);
@@ -77,10 +84,8 @@ public class Vw_contactos extends javax.swing.JDialog {
     }
 
     void mostrarContactos() {
-        for (int i = 0; i < listacont.size(); i++)
-        {
-            if (tbl_contactos.getSelectedRow() == i)
-            {
+        for (int i = 0; i < listacont.size(); i++) {
+            if (tbl_contactos.getSelectedRow() == i) {
                 txt_nombre.setText(listacont.get(i).getNombres());
                 txt_apellido.setText(listacont.get(i).getApellidos());
                 cbx_tipoContacto.setSelectedItem(listacont.get(i).getTipo_contacto());
@@ -91,13 +96,11 @@ public class Vw_contactos extends javax.swing.JDialog {
                 txt_relacion.setText(listacont.get(i).getRelacion());
                 txt_sitioWeb.setText(listacont.get(i).getSitio_web());
                 txt_tipoFecha.setText(listacont.get(i).getTipo_fecha());
-                if (listacont.get(i).getVisibilidad().equals("1"))
-                {
+                if (listacont.get(i).getVisibilidad().equals("2")) {
                     rb_publico.setSelected(false);
                     rb_privado.setSelected(true);
 
-                } else
-                {
+                } else {
                     rb_privado.setSelected(false);
                     rb_publico.setSelected(true);
                 }
@@ -136,29 +139,26 @@ public class Vw_contactos extends javax.swing.JDialog {
         contac.setGrupo(txt_grupo.getText());
         contac.setRelacion(txt_relacion.getText());
         contac.setSitio_web(txt_sitioWeb.getText());
-        if (rb_privado.isSelected())
-        {
-            contac.setVisibilidad("1");
-        } else
-        {
+        if (rb_privado.isSelected()) {
             contac.setVisibilidad("2");
+        } else {
+            contac.setVisibilidad("1");
         }
-        ctc.actualizarContacto(contac, tbl_contactos.getSelectedRow()+1);
+        ctc.actualizarContacto(contac, tbl_contactos.getSelectedRow() + 1);
         limpiarTabla();
         cargarTabla();
         limpiar();
     }
 
     void eliminarContacto() {
-        if (tbl_contactos.getSelectedRow()==0)
-        {
+        if (tbl_contactos.getSelectedRow() == 0) {
             JOptionPane.showMessageDialog(null, "Este contacto no puede eliminarce");
-        }else{
-        Ctr_Contactos ctc = new Ctr_Contactos();
-        ctc.eliminar(tbl_contactos.getSelectedRow());
-        limpiarTabla();
-        cargarTabla();
-        limpiar();
+        } else {
+            Ctr_Contactos ctc = new Ctr_Contactos();
+            ctc.eliminar(tbl_contactos.getSelectedRow());
+            limpiarTabla();
+            cargarTabla();
+            limpiar();
         }
     }
 
@@ -311,7 +311,7 @@ public class Vw_contactos extends javax.swing.JDialog {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        cbx_tipoContacto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contacto", "Familiar", "Amigo", "Empresarial", " " }));
+        cbx_tipoContacto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contacto", "Familiar", "Amigo", "Empresarial" }));
 
         javax.swing.GroupLayout pnl_textFiles1Layout = new javax.swing.GroupLayout(pnl_textFiles1);
         pnl_textFiles1.setLayout(pnl_textFiles1Layout);
@@ -346,7 +346,7 @@ public class Vw_contactos extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        rb_publico.setText("publico");
+        rb_publico.setText("Publico");
         rb_publico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rb_publicoActionPerformed(evt);
@@ -572,7 +572,7 @@ public class Vw_contactos extends javax.swing.JDialog {
                     .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_limpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnl_bodyLayout = new javax.swing.GroupLayout(pnl_body);
@@ -609,7 +609,7 @@ public class Vw_contactos extends javax.swing.JDialog {
                     .addComponent(pnl_labels2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnl_labels1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
@@ -652,15 +652,13 @@ public class Vw_contactos extends javax.swing.JDialog {
     }//GEN-LAST:event_tbl_contactosMouseClicked
 
     private void rb_publicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_publicoActionPerformed
-        if (rb_publico.isSelected())
-        {
+        if (rb_publico.isSelected()) {
             rb_privado.setSelected(false);
         }
     }//GEN-LAST:event_rb_publicoActionPerformed
 
     private void rb_privadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_privadoActionPerformed
-        if (rb_privado.isSelected())
-        {
+        if (rb_privado.isSelected()) {
             rb_publico.setSelected(false);
         }    }//GEN-LAST:event_rb_privadoActionPerformed
 
@@ -673,27 +671,20 @@ public class Vw_contactos extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Vw_contactos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Vw_contactos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Vw_contactos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Vw_contactos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

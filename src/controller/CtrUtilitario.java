@@ -1,5 +1,7 @@
 package controller;
 
+import conexion.Conexion;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,15 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CtrUtilitario {
-    
-    int n=1;
-    public boolean privilegios(){
-        boolean sw = false;
-        if (n==1) {
-           sw=true; 
-        }
-        return sw;
-    }
+
+    int n = 1;
 
     private int dia;
     private int mes;
@@ -27,7 +22,7 @@ public class CtrUtilitario {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         return dateFormat.format(date);
     }
-    
+
     public String horaHoy() {
         Date date = new Date();
         DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
@@ -35,11 +30,13 @@ public class CtrUtilitario {
     }
 
     public Date fecha() {
-        Date date =null;
-         SimpleDateFormat formato= new SimpleDateFormat("yyyy/MM/dd");
-        try {
+        Date date = null;
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+        try
+        {
             date = formato.parse(formato.format(new Date()));
-        } catch (ParseException ex) {
+        } catch (ParseException ex)
+        {
             Logger.getLogger(CtrUtilitario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return date;
@@ -67,14 +64,16 @@ public class CtrUtilitario {
         eAnio = e.substring(pos2 + 1);
         hAnio = h.substring(pos2 + 1);
 
-        if (Integer.parseInt(eAnio) > (Integer.parseInt(hAnio) - 18)) {
-            sw= false;
-        }else{
-            sw= true;
+        if (Integer.parseInt(eAnio) > (Integer.parseInt(hAnio) - 18))
+        {
+            sw = false;
+        } else
+        {
+            sw = true;
         }
         return sw;
     }
-    
+
     public boolean validaFechaActual(Date fecha) {
         Date date = new Date();
         String e, h, eDia, eMes, eAnio, hDia, hMes, hAnio;
@@ -97,14 +96,17 @@ public class CtrUtilitario {
         eAnio = e.substring(pos2 + 1);
         hAnio = h.substring(pos2 + 1);
 
-        if (Integer.parseInt(eAnio) == Integer.parseInt(hAnio) && Integer.parseInt(eMes) == Integer.parseInt(hMes) && Integer.parseInt(eDia) >= Integer.parseInt(hDia)) {
-            sw= true;
-        }else{
-            sw= false;
+        if (Integer.parseInt(eAnio) == Integer.parseInt(hAnio) && Integer.parseInt(eMes) == Integer.parseInt(hMes) && Integer.parseInt(eDia) >= Integer.parseInt(hDia))
+        {
+            sw = true;
+        } else
+        {
+            sw = false;
         }
         return sw;
     }
-    public boolean validaFechaActual(Date actual,Date futura) {        
+
+    public boolean validaFechaActual(Date actual, Date futura) {
         String a, f, aDia, aMes, aAnio, fDia, fMes, fAnio;
         boolean sw = false;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -125,58 +127,92 @@ public class CtrUtilitario {
         aAnio = a.substring(pos2 + 1);
         fAnio = f.substring(pos2 + 1);
 
-        if (Integer.parseInt(aAnio) == Integer.parseInt(fAnio) && Integer.parseInt(aMes) <= Integer.parseInt(fMes) && Integer.parseInt(aDia) <= Integer.parseInt(fDia)) {
-            sw= true;            
-        }else{
-            sw= false;
+        if (Integer.parseInt(aAnio) == Integer.parseInt(fAnio) && Integer.parseInt(aMes) <= Integer.parseInt(fMes) && Integer.parseInt(aDia) <= Integer.parseInt(fDia))
+        {
+            sw = true;
+        } else
+        {
+            sw = false;
         }
         return sw;
     }
-    
-    public void validaLetras(){
+
+    public void validaLetras() {
 //        int k = (int) evt.getKeyChar();
 //        if (k >= 33 && k < 65 || k >= 91 && k < 97 || k >= 123 && k < 128) {
 //            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
 //            JOptionPane.showMessageDialog(null, "No puede ingresar Caracteres especiales\nSólo letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
 //        }
     }
-    
-    public String devuelveFecha(Date fecha){
-        String formato="yyyy/MM/dd";
+
+    public String devuelveFecha(Date fecha) {
+        String formato = "yyyy/MM/dd";
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
-        
+
         return sdf.format(fecha);
     }
-    
-    public Date devuelveFecha(String fecha){
-        SimpleDateFormat formato= new SimpleDateFormat("yyyy/MM/dd");
-        Date fechaParseada=null;
-        try {
+
+    public Date devuelveFecha(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+        Date fechaParseada = null;
+        try
+        {
             fechaParseada = formato.parse(fecha);
-        } catch (ParseException ex) {
+        } catch (ParseException ex)
+        {
             Logger.getLogger(CtrUtilitario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return fechaParseada;
     }
-    
-    public int comparaFechas(Date fecha){
+
+    public int comparaFechas(Date fecha) {
         int sw;
-        String formato="yyyy-LL-dd";
-        Date fechasistema =new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat(formato);     
-        sw=sdf.format(fecha).compareTo(sdf.format(fechasistema));
+        String formato = "yyyy-LL-dd";
+        Date fechasistema = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(formato);
+        sw = sdf.format(fecha).compareTo(sdf.format(fechasistema));
         return sw;
     }
-    
-    public boolean fechaVacia(Date fecha){
-        boolean sw=false; 
-        String formato="yyyy-LL-dd";
-        SimpleDateFormat sdf = new SimpleDateFormat(formato); 
-        try {
-             sdf.format(fecha);
-        } catch (NullPointerException e) {
-            sw=true;
-        }       
+
+    public boolean fechaVacia(Date fecha) {
+        boolean sw = false;
+        String formato = "yyyy-LL-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(formato);
+        try
+        {
+            sdf.format(fecha);
+        } catch (NullPointerException e)
+        {
+            sw = true;
+        }
         return sw;
-    }    
+    }
+
+    public int retornarUsuario() {
+        Conexion conectar = new Conexion();
+        String sql = "Select IdUser From Users where estado = '1'";
+        ResultSet rs = conectar.consultar(sql);
+        int activo=0;
+        try
+        {
+            while (rs.next())
+            {                
+                activo = rs.getInt("IDUSER");
+            }
+        } catch (Exception e)
+        {
+            
+        }
+        return activo;
+    }
+    public void inicioSesion(){
+        Conexion conectar = new Conexion();
+        String sql="UPDATE users SET estado ='0'";
+        conectar.ejecutar(sql);
+    }
+    public void cambiarEstado(String nombreUser){
+        Conexion conectar = new Conexion();
+        String sql="UPDATE users SET estado ='1' where nombre_user ='"+nombreUser+"'";
+        conectar.ejecutar(sql);
+    }
 }

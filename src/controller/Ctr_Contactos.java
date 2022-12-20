@@ -10,22 +10,27 @@ import model.Mdl_Persona;
 public class Ctr_Contactos {
 
     ArrayList<Mdl_Contactos> lis = new ArrayList();
-
+    // Hace registro de un contacto
     public void ingresarContacto(Mdl_Contactos contacto) {
         Conexion conectar = new Conexion();
         CtrUtilitario util = new CtrUtilitario();
         Ctr_Personas per = new Ctr_Personas();
         lis = consultarContactos();
         String sql = "";
+        /*si la lista que genera la funcion consultar esta vacia
+          llena solo un contacto, cuyos datos se tomaran para el
+          administrador*/
         if (lis.isEmpty())
         {
             sql = "INSERT INTO contactos(IDCONTACTO, TIPO_CONTACTO, PERSONA, EMAIL, ALIAS, ESTADO, FECHA_REGISTRO, FECHA_MODIFICACION, FECHA_IMPORTANTE, TIPO_FECHA, GRUPO, RELACION, SITIO_WEB, VISIBILIDAD) "
                     + "VALUES (" + 1 + ", '" + contacto.getTipo_contacto() + "', " + 1 + ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "'," + null + ",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
-        } else
+        } 
+        //Si la lista no se encuentra en vacia empezara a llenar tanto contactos como personas
+        else
         {
-            per.llenarPersona(contacto, autoImcremento());
+            per.llenarPersona(contacto, autoIncremento());
             sql = "INSERT INTO contactos(IDCONTACTO, TIPO_CONTACTO, PERSONA, EMAIL, ALIAS, ESTADO, FECHA_REGISTRO, FECHA_MODIFICACION, FECHA_IMPORTANTE, TIPO_FECHA, GRUPO, RELACION, SITIO_WEB, VISIBILIDAD) "
-                    + "VALUES (" + autoImcremento() + ", '" + contacto.getTipo_contacto() + "', " + autoImcremento() + ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "'," + null + ",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
+                    + "VALUES (" + autoIncremento() + ", '" + contacto.getTipo_contacto() + "', " + autoIncremento() + ",'" + contacto.getEmail() + "', '" + contacto.getAlias() + "', '" + contacto.getConEstado() + "', '" + util.fechaHoy() + "'," + null + ",'" + contacto.getFecha_importante() + "', '" + contacto.getTipo_fecha() + "', '" + contacto.getGrupo() + "', '" + contacto.getRelacion() + "', '" + contacto.getSitio_web() + "', '" + contacto.getVisibilidad() + "')";
         }
         conectar.ejecutar(sql);
     }
@@ -63,8 +68,8 @@ public class Ctr_Contactos {
         sql = "UPDATE contactos SET VISIBILIDAD ='" + contacto.getVisibilidad() + "' WHERE IDCONTACTO =" + index;
         conectar.ejecutar(sql);
     }
-
-    int autoImcremento() {
+    // Toma el id de el ultimo usuario y luego lo incrementa
+    int autoIncremento() {
         Conexion conectar = new Conexion();
         int index = 0;
         String sql = "select IDCONTACTO from contactos";
@@ -83,19 +88,21 @@ public class Ctr_Contactos {
         return index;
     }
 
+    //Consulta los contactos registrados y los retorna como un arrayList
     public ArrayList<Mdl_Contactos> consultarContactos() {
         ArrayList<Mdl_Contactos> listacontac = new ArrayList();
         Conexion conectar = new Conexion();
         Mdl_Persona persona = new Mdl_Persona();
         Ctr_Personas cp = new Ctr_Personas();
-//        CtrUtilitario util = new CtrUtilitario();
-        String sql = "SELECT * FROM contactos";
-//        if (util.retornarUsuario == 2)
-//        {
-//            sql = "SELECT * FROM contactos where visibilidad = '2'";
-//        }else{
-//            sql = "SELECT * FROM contactos";
-//        }
+        CtrUtilitario util = new CtrUtilitario();
+        String sql;
+        //Mira cual es el usuario el cual esta en linea para asi mismo tomar los datos
+        if (util.retornarUsuario() == 2)
+        {   
+            sql = "SELECT * FROM contactos where visibilidad = '1'";
+        }else{
+            sql = "SELECT * FROM contactos";
+        }
         ResultSet rs = conectar.consultar(sql);
         try
         {
@@ -132,12 +139,20 @@ public class Ctr_Contactos {
         return listacontac;
     }
 
+    //Eliminar contacto seleccionado
+    
+    /*Esta funcion solo funciona para los usuarios que sean mayor a 1
+      ya que una ves el contacto 1 sea refistrado se tomara como un contacto
+      la persona 1 y los datos corresponderan al administrador*/
     public void eliminar(int index) {
         Conexion conectar = new Conexion();
         ArrayList<Mdl_Contactos> lista = new ArrayList();
         lista = consultarContactos();
         lista.remove(index);
         String sql;
+        /*Para poder eliminar un usuario de forma correcta lo que se hizo fue
+          eliminar todos los datos de la base de datos mayores a 1 y luego llenarla
+          de nuevo con los datos que se encuentran en el arrayList*/
         try
         {
             sql = "delete from contactos where idcontacto >1";

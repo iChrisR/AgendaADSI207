@@ -14,7 +14,7 @@ public class Vw_menu extends javax.swing.JFrame {
     void AbrirGestionUsuarios() {
         CtrUtilitario util = new CtrUtilitario();
 
-        if (util.privilegios()) {
+        if (util.retornarUsuario()==1) {
             Vw_GestionUsuarios vu = new Vw_GestionUsuarios(this, true);
             vu.setVisible(true);
         }else{
@@ -34,9 +34,9 @@ public class Vw_menu extends javax.swing.JFrame {
         mnt_gestionusuarios = new javax.swing.JMenuItem();
         mn_contactos = new javax.swing.JMenu();
         mnt_gestionContactos = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         VstNotas = new javax.swing.JMenu();
         MntNotas = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -88,9 +88,6 @@ public class Vw_menu extends javax.swing.JFrame {
 
         mnb_menu.add(mn_contactos);
 
-        jMenu2.setText("Edit");
-        mnb_menu.add(jMenu2);
-
         VstNotas.setText("Notas");
         VstNotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +104,9 @@ public class Vw_menu extends javax.swing.JFrame {
         VstNotas.add(MntNotas);
 
         mnb_menu.add(VstNotas);
+
+        jMenu2.setText("Edit");
+        mnb_menu.add(jMenu2);
 
         setJMenuBar(mnb_menu);
 

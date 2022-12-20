@@ -5,6 +5,7 @@
  */
 package view;
 import conexion.Conexion;
+import controller.CtrUtilitario;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -17,14 +18,15 @@ import model.Mdl_User;
 public class Vw_Login extends javax.swing.JFrame {
     Conexion conectar = new Conexion();
      ArrayList<Mdl_User>listauser = new ArrayList();
-   
-    
+     CtrUtilitario util = new CtrUtilitario();
+  
     /**
      * Creates new form VstLogin
      */
     public Vw_Login() {
         initComponents();
         this.setLocationRelativeTo(null);
+        util.inicioSesion();
     }
 
     @SuppressWarnings("unchecked")
@@ -59,7 +61,7 @@ public class Vw_Login extends javax.swing.JFrame {
             }
         });
 
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bolitabn (2).png"))); // NOI18N
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bolitabn.png"))); // NOI18N
         btnAceptar.setText("ACEPTAR");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +111,7 @@ public class Vw_Login extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user (1).png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -174,24 +176,20 @@ public class Vw_Login extends javax.swing.JFrame {
         ResultSet rs = conectar.consultar(sql);
         
         try {
-           
             while(rs.next()){
                 resultado=rs.getInt("IDUSER");
-            
-                if(resultado==0){
-                    System.out.println(resultado);
+            }
+             if(resultado==0){
                     JOptionPane.showMessageDialog(null, "Tu nombre de usuario o contraseña estan mal escritas \n o no está registrado en la base de datos",
                     "Error de validacion",JOptionPane.ERROR_MESSAGE);
                     
                 }else{
-                    System.out.println(resultado);
                     Vw_menu menu = new Vw_menu();
                     menu.setVisible(true);
+                    util.cambiarEstado(usuario);
                     JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
                     this.dispose();
                 }
-            }
-                
         } catch (Exception e) {
              JOptionPane.showMessageDialog(null, "Error de diligencia",
                             "Error",JOptionPane.ERROR_MESSAGE);
