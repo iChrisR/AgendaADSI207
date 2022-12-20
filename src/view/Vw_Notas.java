@@ -36,17 +36,29 @@ public class Vw_Notas extends javax.swing.JFrame {
         initComponents();
         mProperties = new Properties();
         this.setLocationRelativeTo(null);
+        
     }
+    //"jpmlrdetyxuabbxi" contraseña del correo
     //Variables para crear el correo
+    
+    
     private String EmailDesde = control.SacarCorreo();
-    private static String Contrasena = "jpmlrdetyxuabbxi";
+    private static String Contrasena = ingresoPassword();;
     private String emailPara;
     private String titulo;
     private String Contenido;
     private Properties mProperties;
     private Session mSession;
     private MimeMessage mCorreo;
-
+    
+    
+    
+    public static String ingresoPassword(){
+        String password ="";
+       password = JOptionPane.showInputDialog("Ingresa la contraseña del correo");
+        
+        return password;
+    }
     public void Enviar() {
 
         notas.setTipo_nota(String.valueOf(cbbtipodenota1.getSelectedItem()));
@@ -64,15 +76,16 @@ public class Vw_Notas extends javax.swing.JFrame {
             notas.setVisibilidad("0");
         }
 
-        if (chkNotificar.isSelected()) {
-            crearEmail();
-            EnviarEmail();
-        }
+       
         //Use un try por si la nota no se envia y poder enviar el mensaje de enviado o no enviados
         try {
             int work = control.BuscarTitulo(notas);
             if (work == 0) {
                 control.Guardar(notas);
+                 if (chkNotificar.isSelected()) {
+            crearEmail();
+            EnviarEmail();
+        }
             } else {
                 Limpiar();
             }
