@@ -74,7 +74,7 @@ public class Ctr_Notas {
 public int tipo_user(){
        int tipo =0;
      Conexion conectar = new Conexion();
-     String sql = "Select TIPO_USER from USERS where IDUSER=1";
+     String sql = "Select TIPO_USER from USERS where ESTADO=1";
       ResultSet rs =null;
       
       rs = conectar.consultar(sql);
